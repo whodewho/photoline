@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>集图成列</title>
+    <script src="static/js/jquery.js"></script>
+    <script>
+    function appendItem() {
+        var item = "</br><div><input type='file' name='pic[]' /> \
+        </br> <textarea name='des[]' rows=4 cols=50></textarea></div>";
+        $$("#items").append(item);
+    }
+    </script>
+
+</head>
+
+<body>
+
+    <button onclick="appendItem()">更多图片</button>
+
+    <form action="" method="post">
+        <div id="items">
+            <div>
+                <input type="file" name="pic[]" accept="image/*" />
+                </br>
+                <textarea name="des[]" rows="4" cols="50">
+                </textarea>
+            </div>
+        </div>
+        <input type="submit" value="生成页面"></input>
+    </form>
+
+</body>
+
+</html>
