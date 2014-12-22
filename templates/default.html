@@ -1,0 +1,21 @@
+$def with (folder, number)
+<html>
+	<head>
+		<title>
+			集图成列
+		</title>
+	</head>
+	<body>
+
+<object width="600" type="text/plain" data="$folder/title.txt" border="0"> </object>
+<br>
+$if folder:
+	$for i in range(number):
+		<img src="$folder/${i}.jpg" width="600px">
+		<br>
+		<object width="600" type="text/plain" data="$folder/${i}.txt" border="0"> </object>
+		<br> 
+$else: 
+	opps!
+	</body>
+</html>

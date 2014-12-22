@@ -7,8 +7,8 @@
     <script src="static/js/jquery.js"></script>
     <script>
     function appendItem() {
-        var item = "</br><div><input type='file' name='pic[]' /> \
-        </br> <textarea name='des[]' rows=4 cols=50></textarea></div>";
+        var item = "</br><div><input type='file' name='pic' accept='image/*' > \
+        </br> <textarea name='des' rows=4 cols=50></textarea></div>";
         $$("#items").append(item);
     }
     </script>
@@ -19,14 +19,24 @@
 
     <button onclick="appendItem()">更多图片</button>
 
-    <form action="" method="post">
+    <form action="" enctype="multipart/form-data" method="post">
+        <div>
+            <input type="text" name="pageTitle">
+        </div>
         <div id="items">
             <div>
-                <input type="file" name="pic[]" accept="image/*" />
+                <input type="file" name="pic" accept="image/*">
                 </br>
-                <textarea name="des[]" rows="4" cols="50">
+                <textarea name="des" rows="4" cols="50">
                 </textarea>
             </div>
+            <div>
+                <input type="file" name="pic" accept="image/*">
+                </br>
+                <textarea name="des" rows="4" cols="50">
+                </textarea>
+            </div>
+
         </div>
         <input type="submit" value="生成页面"></input>
     </form>
