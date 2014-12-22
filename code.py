@@ -2,11 +2,12 @@ import web
 import os
 import datetime
 from random import Random
-
+import pickle, pprint
 
 render = web.template.render('templates/')
 
-urls = ('/', 'Index')
+urls = ('/', 'Index',
+        '/default/(.*)/(.*)', 'Default')
 
 def random_str(randomlength=10):
     str = ''
@@ -17,53 +18,52 @@ def random_str(randomlength=10):
         str+=chars[random.randint(0, length)]
     return str
 
+class Default():
+    def GET(self, dateStr, randomFolder):
+        dReader = open("static/upload/"+dateStr+"/"+randomFolder+"/config.txt", 'rb')
+        data = pickle.load(dReader)
+        data['dateStr'] = dateStr
+        data['randomFolder'] = randomFolder
+        return render.default(web.storage(data))
+
 class Index:
     def GET(self):
         return render.index();
 
     def POST(self):
-        # x = web.input(pic={})
-        # filedir = 'upload' # change this to the directory you want to store the file in.
-        # if 'pic' in x: # to check if the file-object is created
-        #     filepath=x.pic.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
-        #     filename=filepath.split('/')[-1] # splits the and chooses the last part (the filename with extension)
-        #     fout = open(filedir +'/'+ filename,'w') # creates the file where the uploaded file should be stored
-        #     fout.write(x.pic.file.read()) # writes the uploaded file to the newly created file.
-        #     fout.close() # closes the file, upload complete.
-        # raise web.seeother('/')
-
         dirpath = os.path.join(os.getcwd()+"/static/upload/", datetime.datetime.now().strftime("%Y-%m-%d"))
         if not os.path.exists(dirpath):
-        	os.mkdir(dirpath)
+            os.mkdir(dirpath)
 
         finalpath = os.path.join(dirpath, random_str())
         while os.path.exists(finalpath):
-	        finalpath = os.path.join(dirpath, random_str())
+            finalpath = os.path.join(dirpath, random_str())
         os.mkdir(finalpath)
-
-
-        t = web.input(pageTitle={})
-        tout = open(finalpath+"/title.txt", 'w')
-        tout.write(t.pageTitle)
-        tout.close()
 
         x = web.input(pic=[])
         y = web.input(des=[])
+        t = web.input(pageTitle={})
+
+        data = {}
+        data['title']=t.pageTitle
+        data['des']=[]
+
         i = 0
-        for j in range(10):
-            print j
         for p, d in zip(x['pic'], y['des']):
-        	pout = open(finalpath+"/"+str(i)+'.jpg', 'w')
-        	dout = open(finalpath+"/"+str(i)+'.txt', 'w')
-        	pout.write(p)
-        	dout.write(d)
-        	pout.close()
-        	dout.close()
-        	i = i + 1
+            if len(p)==0:
+                continue
+            pReder = open(finalpath+"/"+str(i)+'.jpg', 'w')
+            data['des'].append(d)
+            pReder.write(p)
+            pReder.close()
+            i = i + 1
+        data['number']=i
 
-        folder = "/".join(finalpath.split('/')[-4:])
-        return render.default(folder, i);
+        dReader = open(finalpath+"/config.txt", 'wb')
+        pickle.dump(data, dReader)
+        dReader.close()
 
+        raise web.seeother('/default/'+"/".join(finalpath.split('/')[-2:]))
 
 if __name__ == "__main__":
    app = web.application(urls, globals()) 

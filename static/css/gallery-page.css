@@ -1,0 +1,19 @@
+html {
+    line-height: 1.6
+}
+body {
+    line-height: inherit;
+    background-color: #f8f7f5;
+}
+
+.container{
+    width:auto;
+    max-width:680;
+    padding:0 15px;
+    background-color: #fff
+}
+
+object{
+    height:100px;
+    font:italic arial,sans-serif;
+}
