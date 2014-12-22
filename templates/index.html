@@ -3,44 +3,61 @@
 
 <head>
     <meta charset="utf-8">
-    <title>集图成列</title>
-    <script src="static/js/jquery.js"></script>
+    <title>图线</title>
     <script>
     function appendItem() {
-        var item = "<br><div><textarea name='des' rows=4 cols=50></textarea> \
-        <br><input type='file' name='pic' accept='image/*' ></div>";
+        var item = "<div class='col-sm-12 item'> \
+                        <textarea name='des' class='form-control' rows=3></textarea> \
+                        <a class='file-input-wrapper btn btn-default'> \
+                            <span>Browse</span> \
+                            <input type='file' name='pic' accept='image/*' data-filename-placement='inside'> \
+                        </a> \
+                    </div>";
         $$("#items").append(item);
+        $$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});
     }
     </script>
+    <script src="static/js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/gallery-page-index.css"/>
 
+    <script src="static/js/bootstrap.file-input.js"></script>
+    <script>$$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});</script>
 </head>
 
 <body>
-    <div>
-        <button onclick="appendItem()">更多图片</button>
+    <div class="container">
 
-        <form action="" enctype="multipart/form-data" method="post">
-            <div>
-                标题：<input type="text" name="pageTitle">
-            </div>
-            <br>
-            <div id="items">
-                <div>
-                    <textarea name="des" rows="4" cols="50"> </textarea>
-                    <br>
-                    <input type="file" name="pic" accept="image/*">
-                </div>
-                <br>
-                <div>
-                    <textarea name="des" rows="4" cols="50"> </textarea>
-                    <br>
-                    <input type="file" name="pic" accept="image/*">
+        <form action="" enctype="multipart/form-data" method="post" role="form" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="pageTitle">
                 </div>
             </div>
-            <br>
-            <input type="submit" value="生成页面"></input>
+
+            <div id="items" class="form-group">
+                <div class="col-sm-12 item">
+                    <textarea name="des" class="form-control" rows=3> </textarea>
+                    <!-- <input type="file" name="pic" accept="image/*"> -->
+                    <a class="file-input-wrapper btn btn-default">
+                        <span>Browse</span>
+                        <input type="file" name="pic" accept="image/*" data-filename-placement="inside">
+                    </a>
+                </div>
+            </div>
+
+            <div class="center form-group">
+                <button onclick="appendItem()" type="button" class="btn btn-default" aria-label="More Image">
+                  <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                <button class="btn btn-primary" type="submit">
+                    生成
+                </button>
+            </div>
         </form>
     </div>
+
 </body>
 
 </html>

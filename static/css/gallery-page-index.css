@@ -1,0 +1,20 @@
+
+.container{
+    width:auto;
+    max-width:375px;
+    padding: 10px 5px;
+}
+
+textarea{
+    width: 350px;
+    height: 100px;
+}
+
+.item{
+    margin:7px 0px;
+    /*border-bottom: 1px solid #e5e5e5;*/
+}
+
+.center{
+    text-align: center;
+}
