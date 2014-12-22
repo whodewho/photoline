@@ -1,6 +1,9 @@
 $def with (data)
 <html>
+
 	<head>
+    <meta charset="utf-8">
+
 		<title>
 			$data['title']
 		</title>
@@ -13,17 +16,33 @@ $def with (data)
 
 	<body>
 		<div class="container">
-			<div class="header">
+			<div class="page-header">
+				<h2>
 				$data['title']
+				</h2>
 			</div>
-$if data:
-	$for i in range(data['number']):
-		<img src="/static/upload/$data['dateStr']/$data['randomFolder']/${i}.jpg" width="600px">
-		<br>
-		$data['des'][i]
-		<br> 
-$else: 
-	opps!
+
+			<div class="content">
+				$if data:
+					$for i in range(data['number']):
+						<div class="des-container">
+							<p><span><br></span></p>
+							$for p in data['des'][i].split("\r\n"):
+								<p>$p</p>
+							<p><span><br></span></p>
+						</div>
+						<div class="img-container">
+							<img src="/static/upload/$data['dateStr']/$data['randomFolder']/${i}.jpg" width="600px">
+						</div>
+
+				$else: 
+					opps!
+			</div>
 		</div>
+
+		<div class="secret">
+			For Garfield, By Arthur 
+		</div>
+
 	</body>
 </html>

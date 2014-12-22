@@ -7,8 +7,8 @@
     <script src="static/js/jquery.js"></script>
     <script>
     function appendItem() {
-        var item = "</br><div><input type='file' name='pic' accept='image/*' > \
-        </br> <textarea name='des' rows=4 cols=50></textarea></div>";
+        var item = "<br><div><textarea name='des' rows=4 cols=50></textarea> \
+        <br><input type='file' name='pic' accept='image/*' ></div>";
         $$("#items").append(item);
     }
     </script>
@@ -16,31 +16,31 @@
 </head>
 
 <body>
+    <div>
+        <button onclick="appendItem()">更多图片</button>
 
-    <button onclick="appendItem()">更多图片</button>
-
-    <form action="" enctype="multipart/form-data" method="post">
-        <div>
-            <input type="text" name="pageTitle">
-        </div>
-        <div id="items">
+        <form action="" enctype="multipart/form-data" method="post">
             <div>
-                <input type="file" name="pic" accept="image/*">
-                </br>
-                <textarea name="des" rows="4" cols="50">
-                </textarea>
+                标题：<input type="text" name="pageTitle">
             </div>
-            <div>
-                <input type="file" name="pic" accept="image/*">
-                </br>
-                <textarea name="des" rows="4" cols="50">
-                </textarea>
+            <br>
+            <div id="items">
+                <div>
+                    <textarea name="des" rows="4" cols="50"> </textarea>
+                    <br>
+                    <input type="file" name="pic" accept="image/*">
+                </div>
+                <br>
+                <div>
+                    <textarea name="des" rows="4" cols="50"> </textarea>
+                    <br>
+                    <input type="file" name="pic" accept="image/*">
+                </div>
             </div>
-
-        </div>
-        <input type="submit" value="生成页面"></input>
-    </form>
-
+            <br>
+            <input type="submit" value="生成页面"></input>
+        </form>
+    </div>
 </body>
 
 </html>

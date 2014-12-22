@@ -1,19 +1,33 @@
-html {
-    line-height: 1.6
-}
+
 body {
     line-height: inherit;
     background-color: #f8f7f5;
+    margin-bottom: 60px;    
 }
 
 .container{
     width:auto;
-    max-width:680;
-    padding:0 15px;
-    background-color: #fff
+    max-width:680px;
+    padding:0 15px 60px 15px;
+    background-color: #fff;
 }
 
-object{
-    height:100px;
-    font:italic arial,sans-serif;
+.img-container{
+    text-align: center;
+}
+
+.des-container{
+
+}
+
+p{
+    line-height: 1.75em;
+    margin: 0 0 2;
+}
+
+.secret{
+    text-align: center;
+    font-size: 200%;
+    margin: 20px;
+    color: #f8f7f5;
 }

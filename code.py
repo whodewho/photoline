@@ -24,6 +24,7 @@ class Default():
         data = pickle.load(dReader)
         data['dateStr'] = dateStr
         data['randomFolder'] = randomFolder
+        # data['des'] = [x.replace("\r\n", "<br>") for x in data['des']]
         return render.default(web.storage(data))
 
 class Index:
