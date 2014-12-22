@@ -3,26 +3,45 @@
 
 <head>
     <meta charset="utf-8">
-    <title>图线</title>
-    <script>
+    <title>连图</title>
+    <script type="text/javascript">
     function appendItem() {
         var item = "<div class='col-sm-12 item'> \
                         <textarea name='des' class='form-control' rows=3></textarea> \
                         <a class='file-input-wrapper btn btn-default'> \
-                            <span>Browse</span> \
+                            <span>浏览</span> \
                             <input type='file' name='pic' accept='image/*' data-filename-placement='inside'> \
                         </a> \
+                        <button type='button' class='remove btn btn-default' aria-label='Remove Image'> \
+                            <span  class='glyphicon glyphicon-remove' aria-hidden='true'></span> \
+                        </button> \
                     </div>";
+
         $$("#items").append(item);
         $$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});
+        $$( document ).ready(function() {
+            $$( ".remove" ).click(function( event ) {
+                $$(this).closest('.item').fadeOut(300, function(){$$(this).remove(); });
+            });
+        });
     }
     </script>
+
     <script src="static/js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/gallery-page-index.css"/>
 
     <script src="static/js/bootstrap.file-input.js"></script>
     <script>$$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});</script>
+
+    <script>
+    $$( document ).ready(function() {
+        $$( ".remove" ).click(function( event ) {
+            $$(this).closest('.item').fadeOut(300, function(){$$(this).remove(); });
+        });
+    });
+    </script>
+
 </head>
 
 <body>
@@ -41,9 +60,12 @@
                     <textarea name="des" class="form-control" rows=3> </textarea>
                     <!-- <input type="file" name="pic" accept="image/*"> -->
                     <a class="file-input-wrapper btn btn-default">
-                        <span>Browse</span>
+                        <span>浏览</span>
                         <input type="file" name="pic" accept="image/*" data-filename-placement="inside">
                     </a>
+                    <button type="button" class="remove btn btn-default" aria-label="Remove Image">
+                        <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
 

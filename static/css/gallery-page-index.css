@@ -18,3 +18,7 @@ textarea{
 .center{
     text-align: center;
 }
+
+.remove{
+    float:right;
+}
