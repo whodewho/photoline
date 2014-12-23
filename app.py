@@ -3,8 +3,14 @@ import os
 import datetime
 from random import Random
 import pickle, pprint
+import sae
 
-render = web.template.render('templates/')
+# render = web.template.render('templates/')
+
+app_root = os.path.dirname(__file__)
+templates_root = os.path.join(app_root, 'templates')
+render = web.template.render(templates_root)
+
 
 urls = ('/', 'Index',
         '/default/(.*)/(.*)', 'Default')
@@ -66,6 +72,10 @@ class Index:
 
         raise web.seeother('/default/'+"/".join(finalpath.split('/')[-2:]))
 
+
+app = web.application(urls, globals()) 
 if __name__ == "__main__":
-   app = web.application(urls, globals()) 
    app.run()
+else:
+    application = sae.create_wsgi_app(app.wsgifunc())
+
