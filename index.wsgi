@@ -7,6 +7,8 @@ import sae
 
 # render = web.template.render('templates/')
 
+web.config.debug = True
+
 app_root = os.path.dirname(__file__)
 templates_root = os.path.join(app_root, 'templates')
 render = web.template.render(templates_root)
@@ -38,7 +40,7 @@ class Index:
         return render.index();
 
     def POST(self):
-        dirpath = os.path.join(os.getcwd()+"/static/upload/", datetime.datetime.now().strftime("%Y-%m-%d"))
+        dirpath = os.path.join(os.path.join(app_root, "static/upload/"), datetime.datetime.now().strftime("%Y-%m-%d"))
         if not os.path.exists(dirpath):
             os.mkdir(dirpath)
 
