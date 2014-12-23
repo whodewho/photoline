@@ -6,18 +6,15 @@ body {
 }
 
 .container{
+    font-size: 16px;
     width:auto;
     max-width:680px;
     padding:0 15px 60px 15px;
     background-color: #fff;
 }
 
-.img-container{
+.center{
     text-align: center;
-}
-
-.des-container{
-
 }
 
 p{
@@ -28,6 +25,11 @@ p{
 .secret{
     text-align: center;
     font-size: 100%;
-    margin: 20px;
     color: #f8f7f5;
+    margin: 37px 0 0 0;
+}
+
+.footer-container{
+    padding: 20px;
+    background-color: #f8f7f5;
 }
