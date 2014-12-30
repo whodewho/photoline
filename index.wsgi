@@ -4,6 +4,8 @@ import datetime
 from random import Random
 import pickle, pprint
 import sae
+from sae.storage import Bucket
+from sae.storage import Connection
 
 # render = web.template.render('templates/')
 
@@ -27,12 +29,16 @@ def random_str(randomlength=10):
     return str
 
 class Default():
-    def GET(self, dateStr, randomFolder):
-        dReader = open("static/upload/"+dateStr+"/"+randomFolder+"/config.txt", 'rb')
-        data = pickle.load(dReader)
-        data['dateStr'] = dateStr
-        data['randomFolder'] = randomFolder
+    def GET(self, bucketId, tupleId):
+        conn = sae.storage.Connection()
+        bucket = conn.get_bucket(bucketId)
+        data = pickle.loads(bucket.get_object_contents(tupleId+"/config.txt"))
+        print data
+        print "------------"
         # data['des'] = [x.replace("\r\n", "<br>") for x in data['des']]
+        urlPrefix = bucket.generate_url(tupleId+"/config.txt")[:-11];
+        print urlPrefix
+        data['urlPrefix'] = urlPrefix
         return render.default(web.storage(data))
 
 class Index:
@@ -40,14 +46,10 @@ class Index:
         return render.index();
 
     def POST(self):
-        dirpath = os.path.join(os.path.join(app_root, "static/upload/"), datetime.datetime.now().strftime("%Y-%m-%d"))
-        if not os.path.exists(dirpath):
-            os.mkdir(dirpath)
-
-        finalpath = os.path.join(dirpath, random_str())
-        while os.path.exists(finalpath):
-            finalpath = os.path.join(dirpath, random_str())
-        os.mkdir(finalpath)
+        tupleId = random_str()
+        bucketId = "t"
+        bucket = Bucket(bucketId)
+        bucket.put()
 
         x = web.input(pic=[])
         y = web.input(des=[])
@@ -61,18 +63,14 @@ class Index:
         for p, d in zip(x['pic'], y['des']):
             if len(p)==0:
                 continue
-            pReder = open(finalpath+"/"+str(i)+'.jpg', 'w')
+            bucket.put_object(tupleId+"/"+str(i)+'.jpg', p)
             data['des'].append(d)
-            pReder.write(p)
-            pReder.close()
             i = i + 1
         data['number']=i
 
-        dReader = open(finalpath+"/config.txt", 'wb')
-        pickle.dump(data, dReader)
-        dReader.close()
+        bucket.put_object(tupleId+"/config.txt", pickle.dumps(data))
 
-        raise web.seeother('/default/'+"/".join(finalpath.split('/')[-2:]))
+        raise web.seeother("/default/"+bucketId+"/"+tupleId)
 
 
 app = web.application(urls, globals()) 
