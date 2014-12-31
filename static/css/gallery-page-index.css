@@ -1,31 +1,17 @@
 
 .container{
     width:auto;
-    max-width:375px;
-    padding: 10px 5px;
-}
-
-textarea{
-    width: 350px;
-    height: 100px;
+    max-width:800px;
 }
 
 .item{
-    margin:7px 0px;
-    /*border-bottom: 1px solid #e5e5e5;*/
+    margin:10px 0px;
 }
 
 .center{
     text-align: center;
 }
 
-.remove{
-    float:right;
-}
-
-#thumbnail{
-    max-width: 365px;
-    max-height: 365px;
-    margin-left: auto;
-    margin-right: auto;
+.afterbrowse{
+    display:none;
 }

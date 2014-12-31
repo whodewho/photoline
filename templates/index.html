@@ -9,16 +9,14 @@
     <script type="text/javascript">
     function appendItem() {
         var item = "<div class='col-sm-12 item'> \
-                        <a class='file-input-wrapper btn btn-default'> \
+                        <a class='file-input-wrapper btn btn-success btn-block'> \
                             <span>浏览</span> \
                             <input class='imageLoader' type='file' name='pic' accept='image/*' data-filename-placement='inside'> \
                         </a> \
-                        <button type='button' class='remove btn btn-default' aria-label='Remove Image'> \
-                            <span  class='glyphicon glyphicon-remove' aria-hidden='true'></span> \
-                        </button> \
-                        <textarea name='des' class='form-control' rows=3></textarea> \
+                        <textarea name='des' class='btn-block afterbrowse' ></textarea> \
                         <img class='img-responsive' id='thumbnail' > \
                         <input class='imageHidden' name='pic' type='hidden' > \
+                        <button type='button' class='remove btn btn-block btn-default afterbrowse' aria-label='Remove Image'>删除 </button> \
                     </div>";
 
         $$("#items").append(item);
@@ -40,6 +38,8 @@
                 var ctx = imageCanvas.getContext("2d");
 
                 var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
+
+                $$(this).closest("a").siblings(".afterbrowse").show();
 
                 img.onload=function(){
                     var MAX_WIDTH = 800;
@@ -91,6 +91,8 @@
 
                 var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
 
+                $$(this).closest("a").siblings(".afterbrowse").show();
+
                 img.onload=function(){
                     var MAX_WIDTH = 800;
                     var MAX_HEIGHT = 600;
@@ -138,39 +140,36 @@
 
         <form id="theform" action="" enctype="multipart/form-data" method="post" role="form" class="form-horizontal">
             <div class="form-group">
-                <label class="col-sm-2 control-label">标题</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" name="pageTitle">
+                <div class="col-sm-12">
+                    <input class="form-control" type="text" name="pageTitle" value="标题">
                 </div>
             </div>
 
             <div id="items" class="form-group">
                 <div class="col-sm-12 item">
-
-                    <!-- <input type="file" name="pic" accept="image/*" id="imageLoader"> -->
-
-                    <a class="file-input-wrapper btn btn-default">
+                    <a class="file-input-wrapper btn btn-success btn-block">
                         <span>浏览</span>
                         <input class="imageLoader" type="file" name="pic" accept="image/*" data-filename-placement="inside" >
                     </a>
+                    
+                    <textarea name="des" class="btn-block afterbrowse" > </textarea>
 
-                    <button type="button" class="remove btn btn-default" aria-label="Remove Image">
-                        <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </button>
-
-                    <textarea name="des" class="form-control" rows=3> </textarea>
                     <img class="img-responsive" id="thumbnail" ></img>
                     <input class="imageHidden" name="pic" type="hidden" >
 
+                    <button type="button" class="remove btn btn-block btn-default afterbrowse" aria-label="Remove Image">
+                        删除
+                    </button>
                 </div>
             </div>
 
-            <div class="center form-group">
-                <button onclick="appendItem()" type="button" class="btn btn-default" aria-label="More Image">
-                  <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-                <input class="btn btn-primary generate" type="button" value="生成" />
-            </div>
+             <button type="button" class="btn btn-success btn-block" onclick="appendItem()">
+                  更多图片
+             </button>
+
+             <button type="submit" class="btn btn-primary btn-block generate">
+                  生成网页
+             </button>
         </form>
     </div>
 
