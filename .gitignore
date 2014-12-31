@@ -1,4 +1,4 @@
 static/upload/*
 *.pyc
 *.wsgic
-storage/*
+static/storage/*
