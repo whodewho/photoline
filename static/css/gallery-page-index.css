@@ -23,7 +23,9 @@ textarea{
     float:right;
 }
 
-#imageCanvas{
+#thumbnail{
     max-width: 365px;
     max-height: 365px;
+    margin-left: auto;
+    margin-right: auto;
 }

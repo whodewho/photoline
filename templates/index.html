@@ -17,7 +17,7 @@
                             <span  class='glyphicon glyphicon-remove' aria-hidden='true'></span> \
                         </button> \
                         <textarea name='des' class='form-control' rows=3></textarea> \
-                        <canvas id='imageCanvas' ></canvas> \
+                        <img class='img-responsive' id='thumbnail' > \
                         <input class='imageHidden' name='pic' type='hidden' > \
                     </div>";
 
@@ -33,13 +33,13 @@
 
         $$( document ).ready(function() {
             $$( ".imageLoader").change(function() {
-                var img = document.createElement("img");
+                var img = ($$(this).closest("a").siblings("#thumbnail")[0])
                 img.src = window.URL.createObjectURL(this.files[0]);
 
-                var imageCanvas = ($$(this).closest("a").siblings("#imageCanvas")[0])
+                var imageCanvas = document.createElement("canvas");
                 var ctx = imageCanvas.getContext("2d");
 
-                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0])
+                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
 
                 img.onload=function(){
                     var MAX_WIDTH = 800;
@@ -62,12 +62,12 @@
                     imageCanvas.width = width;
                     imageCanvas.height = height;
 
-                    ctx.drawImage(img, 0, 0);
+                    ctx.drawImage(img, 0, 0, width, height);
                     imageHidden.value=imageCanvas.toDataURL("image/jpeg");
                 }
             });
-        });
-        }
+        });        
+    }
     </script>
 
     <script src="static/js/jquery.js"></script>
@@ -83,13 +83,13 @@
 
         $$( document ).ready(function() {
             $$( ".imageLoader").change(function() {
-                var img = document.createElement("img");
+                var img = ($$(this).closest("a").siblings("#thumbnail")[0])
                 img.src = window.URL.createObjectURL(this.files[0]);
 
-                var imageCanvas = ($$(this).closest("a").siblings("#imageCanvas")[0])
+                var imageCanvas = document.createElement("canvas");
                 var ctx = imageCanvas.getContext("2d");
 
-                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0])
+                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
 
                 img.onload=function(){
                     var MAX_WIDTH = 800;
@@ -159,7 +159,7 @@
                     </button>
 
                     <textarea name="des" class="form-control" rows=3> </textarea>
-                    <canvas id="imageCanvas" ></canvas>
+                    <img class="img-responsive" id="thumbnail" ></img>
                     <input class="imageHidden" name="pic" type="hidden" >
 
                 </div>
