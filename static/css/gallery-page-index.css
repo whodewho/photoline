@@ -22,3 +22,8 @@ textarea{
 .remove{
     float:right;
 }
+
+#imageCanvas{
+    width: 365px;
+    max-height: 365px;
+}

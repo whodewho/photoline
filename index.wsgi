@@ -6,6 +6,7 @@ import pickle, pprint
 import sae
 from sae.storage import Bucket
 from sae.storage import Connection
+from base64 import decodestring
 
 # render = web.template.render('templates/')
 
@@ -33,11 +34,8 @@ class Default():
         conn = sae.storage.Connection()
         bucket = conn.get_bucket(bucketId)
         data = pickle.loads(bucket.get_object_contents(tupleId+"/config.txt"))
-        print data
-        print "------------"
         # data['des'] = [x.replace("\r\n", "<br>") for x in data['des']]
         urlPrefix = bucket.generate_url(tupleId+"/config.txt")[:-11];
-        print urlPrefix
         data['urlPrefix'] = urlPrefix
         return render.default(web.storage(data))
 
@@ -49,7 +47,7 @@ class Index:
         tupleId = random_str()
         bucketId = "t"
         bucket = Bucket(bucketId)
-        bucket.put()
+        # bucket.put()
 
         x = web.input(pic=[])
         y = web.input(des=[])
@@ -63,7 +61,7 @@ class Index:
         for p, d in zip(x['pic'], y['des']):
             if len(p)==0:
                 continue
-            bucket.put_object(tupleId+"/"+str(i)+'.jpg', p)
+            bucket.put_object(tupleId+"/"+str(i)+'.jpg', decodestring(p[23:]))
             data['des'].append(d)
             i = i + 1
         data['number']=i

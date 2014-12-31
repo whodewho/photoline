@@ -7,47 +7,134 @@
     <script type="text/javascript">
     function appendItem() {
         var item = "<div class='col-sm-12 item'> \
-                        <textarea name='des' class='form-control' rows=3></textarea> \
                         <a class='file-input-wrapper btn btn-default'> \
                             <span>浏览</span> \
-                            <input type='file' name='pic' accept='image/*' data-filename-placement='inside'> \
+                            <input class='imageLoader' type='file' name='pic' accept='image/*' data-filename-placement='inside'> \
                         </a> \
                         <button type='button' class='remove btn btn-default' aria-label='Remove Image'> \
                             <span  class='glyphicon glyphicon-remove' aria-hidden='true'></span> \
                         </button> \
+                        <textarea name='des' class='form-control' rows=3></textarea> \
+                        <canvas id='imageCanvas' ></canvas> \
+                        <input class='imageHidden' name='pic' type='hidden' > \
                     </div>";
 
         $$("#items").append(item);
+        
         $$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});
+
         $$( document ).ready(function() {
             $$( ".remove" ).click(function( event ) {
                 $$(this).closest('.item').fadeOut(300, function(){$$(this).remove(); });
             });
         });
-    }
+
+        $$( document ).ready(function() {
+            $$( ".imageLoader").change(function() {
+                var img = document.createElement("img");
+                img.src = window.URL.createObjectURL(this.files[0]);
+
+                var imageCanvas = ($$(this).closest("a").siblings("#imageCanvas")[0])
+                var ctx = imageCanvas.getContext("2d");
+
+                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0])
+
+                img.onload=function(){
+                    var MAX_WIDTH = 800;
+                    var MAX_HEIGHT = 600;
+                    var width = img.width;
+                    var height = img.height;
+                     
+                    if (width > height) {
+                      if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                      }
+                    } else {
+                      if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                      }
+                    }
+                    
+                    imageCanvas.width = width;
+                    imageCanvas.height = height;
+
+                    ctx.drawImage(img, 0, 0);
+                    imageHidden.value=imageCanvas.toDataURL("image/jpeg");
+                }
+            });
+        });
+        }
     </script>
 
     <script src="static/js/jquery.js"></script>
+    <script src="static/js/jcanvas.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/gallery-page-index.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/gallery-page-index.css">
 
     <script src="static/js/bootstrap.file-input.js"></script>
-    <script>$$(document).ready(function(){$$('input[type=file]').bootstrapFileInput();});</script>
-
     <script>
-    $$( document ).ready(function() {
-        $$( ".remove" ).click(function( event ) {
-            $$(this).closest('.item').fadeOut(300, function(){$$(this).remove(); });
+        $$(document).ready(function(){
+            $$('input[type=file]').bootstrapFileInput();
         });
-    });
-    </script>
 
+        $$( document ).ready(function() {
+            $$( ".imageLoader").change(function() {
+                var img = document.createElement("img");
+                img.src = window.URL.createObjectURL(this.files[0]);
+
+                var imageCanvas = ($$(this).closest("a").siblings("#imageCanvas")[0])
+                var ctx = imageCanvas.getContext("2d");
+
+                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0])
+
+                img.onload=function(){
+                    var MAX_WIDTH = 800;
+                    var MAX_HEIGHT = 600;
+                    var width = img.width;
+                    var height = img.height;
+                     
+                    if (width > height) {
+                      if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                      }
+                    } else {
+                      if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                      }
+                    }
+                    
+                    imageCanvas.width = width;
+                    imageCanvas.height = height;
+
+                    ctx.drawImage(img, 0, 0);
+                    imageHidden.value=imageCanvas.toDataURL("image/jpeg");
+                }
+            });
+        });
+
+        $$( document ).ready(function() {
+            $$( ".remove" ).click(function( event ) {
+                $$(this).closest('.item').fadeOut(300, function(){$$(this).remove(); });
+            });
+        });
+
+        $$( document ).ready(function() {
+            $$( ".generate" ).click(function( event ) {
+                $$(".imageLoader").prop("disabled", true);
+                $$("#theform").submit();
+            });
+        });
+    </script>
 </head>
 
 <body>
     <div class="container">
 
-        <form action="" enctype="multipart/form-data" method="post" role="form" class="form-horizontal">
+        <form id="theform" action="" enctype="multipart/form-data" method="post" role="form" class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">标题</label>
                 <div class="col-sm-10">
@@ -57,15 +144,22 @@
 
             <div id="items" class="form-group">
                 <div class="col-sm-12 item">
-                    <textarea name="des" class="form-control" rows=3> </textarea>
-                    <!-- <input type="file" name="pic" accept="image/*"> -->
+
+                    <!-- <input type="file" name="pic" accept="image/*" id="imageLoader"> -->
+
                     <a class="file-input-wrapper btn btn-default">
                         <span>浏览</span>
-                        <input type="file" name="pic" accept="image/*" data-filename-placement="inside">
+                        <input class="imageLoader" type="file" name="pic" accept="image/*" data-filename-placement="inside" >
                     </a>
+
                     <button type="button" class="remove btn btn-default" aria-label="Remove Image">
                         <span  class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </button>
+
+                    <textarea name="des" class="form-control" rows=3> </textarea>
+                    <canvas id="imageCanvas" ></canvas>
+                    <input class="imageHidden" name="pic" type="hidden" >
+
                 </div>
             </div>
 
@@ -73,13 +167,10 @@
                 <button onclick="appendItem()" type="button" class="btn btn-default" aria-label="More Image">
                   <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <button class="btn btn-primary" type="submit">
-                    生成
-                </button>
+                <input class="btn btn-primary generate" type="button" value="生成" />
             </div>
         </form>
     </div>
 
 </body>
-
 </html>
