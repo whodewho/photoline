@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <title>连图</title>
     <script type="text/javascript">
     function appendItem() {
@@ -110,7 +112,7 @@
                     imageCanvas.width = width;
                     imageCanvas.height = height;
 
-                    ctx.drawImage(img, 0, 0);
+                    ctx.drawImage(img, 0, 0, width, height);
                     imageHidden.value=imageCanvas.toDataURL("image/jpeg");
                 }
             });
