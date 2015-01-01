@@ -2,11 +2,10 @@
 body {
     line-height: inherit;
     background-color: #f8f7f5;
-    margin-bottom: 60px;    
 }
 
 .container{
-    font-size: 16px;
+    font-size: 16px;    
     width:auto;
     max-width:680px;
     padding:0 15px 60px 15px;
@@ -23,13 +22,18 @@ p{
 }
 
 .secret{
-    text-align: center;
     font-size: 100%;
     color: #f8f7f5;
-    margin: 37px 0 0 0;
+    margin: 17px 0 0 0;
 }
 
-.footer-container{
-    padding: 20px;
+.footer{
+    height: 60px;
+    width: 100%;
+    bottom: 0;
     background-color: #f8f7f5;
+}
+
+.text-muted{
+    margin:20px 0;
 }

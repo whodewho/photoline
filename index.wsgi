@@ -6,7 +6,9 @@ import pickle, pprint
 import sae
 from sae.storage import Bucket
 from sae.storage import Connection
+from sae.storage import Error
 from base64 import decodestring
+from datetime import date
 
 # render = web.template.render('templates/')
 
@@ -44,11 +46,21 @@ class Index:
         return render.index();
 
     def POST(self):
-        tupleId = random_str()
-        bucketId = "t"
+        # chars='aabcdefghijklmnopqrstuvwxyz0123456789'
+        # bucketId = chars[date.today().day]
+        bucketId = 't'
         bucket = Bucket(bucketId)
-        # bucket.put()
 
+        tupleId = random_str()
+        while True:
+            try:
+                if list(bucket.list(prefix=tupleId)):
+                    tupleId = random_str()
+                else:
+                    break
+            except sae.storage.Error:
+                pass
+        
         x = web.input(pic=[])
         y = web.input(des=[])
         t = web.input(pageTitle={})
@@ -64,6 +76,10 @@ class Index:
             bucket.put_object(tupleId+"/"+str(i)+'.jpg', decodestring(p[23:]))
             data['des'].append(d)
             i = i + 1
+
+        if i == 0:
+            return render.index()
+
         data['number']=i
 
         bucket.put_object(tupleId+"/config.txt", pickle.dumps(data))

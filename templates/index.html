@@ -64,6 +64,7 @@
 
                     ctx.drawImage(img, 0, 0, width, height);
                     imageHidden.value=imageCanvas.toDataURL("image/jpeg");
+                    appendItem();
                 }
             });
         });        
@@ -71,7 +72,6 @@
     </script>
 
     <script src="static/js/jquery.js"></script>
-    <script src="static/js/jcanvas.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/gallery-page-index.css">
 
@@ -116,6 +116,7 @@
 
                     ctx.drawImage(img, 0, 0, width, height);
                     imageHidden.value=imageCanvas.toDataURL("image/jpeg");
+                    appendItem();
                 }
             });
         });
@@ -163,9 +164,6 @@
                 </div>
             </div>
 
-             <button type="button" class="btn btn-success btn-block" onclick="appendItem()">
-                  更多图片
-             </button>
 
              <button type="submit" class="btn btn-primary btn-block generate">
                   生成网页
@@ -173,5 +171,10 @@
         </form>
     </div>
 
+    <div class="footer">
+        <div class="container">
+            <p class="text-muted">© Arthur <span class="secret">For Garfield</span></p>
+        </div>
+    </div>
 </body>
 </html>

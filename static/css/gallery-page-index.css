@@ -1,3 +1,11 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body{
+    margin-bottom: 60px;
+}
 
 .container{
     width:auto;
@@ -14,4 +22,22 @@
 
 .afterbrowse{
     display:none;
+}
+
+.secret{
+    font-size: 100%;
+    color: #f8f7f5;
+    margin: 17px 0 0 0;
+}
+
+.footer{
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    background-color: #f8f7f5;
+}
+
+.text-muted{
+    margin:20px 0;
 }
