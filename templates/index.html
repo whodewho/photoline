@@ -15,7 +15,6 @@
                         </a> \
                         <textarea name='des' class='btn-block afterbrowse' ></textarea> \
                         <img class='img-responsive' id='thumbnail' > \
-                        <input class='imageHidden' name='pic' type='hidden' > \
                         <button type='button' class='remove btn btn-block btn-default afterbrowse' aria-label='Remove Image'>删除 </button> \
                     </div>";
 
@@ -37,37 +36,14 @@
                 var imageCanvas = document.createElement("canvas");
                 var ctx = imageCanvas.getContext("2d");
 
-                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
-
                 $$(this).closest("a").siblings(".afterbrowse").show();
 
                 img.onload=function(){
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 600;
-                    var width = img.width;
-                    var height = img.height;
-                     
-                    if (width > height) {
-                      if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                      }
-                    } else {
-                      if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                      }
-                    }
-                    
-                    imageCanvas.width = width;
-                    imageCanvas.height = height;
-
-                    ctx.drawImage(img, 0, 0, width, height);
-                    imageHidden.value=imageCanvas.toDataURL("image/jpeg");
                     appendItem();
                 }
             });
-        });        
+        });
+      
     }
     </script>
 
@@ -89,33 +65,9 @@
                 var imageCanvas = document.createElement("canvas");
                 var ctx = imageCanvas.getContext("2d");
 
-                var imageHidden =  ($$(this).closest("a").siblings(".imageHidden")[0]);
-
                 $$(this).closest("a").siblings(".afterbrowse").show();
 
                 img.onload=function(){
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 600;
-                    var width = img.width;
-                    var height = img.height;
-                     
-                    if (width > height) {
-                      if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                      }
-                    } else {
-                      if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                      }
-                    }
-                    
-                    imageCanvas.width = width;
-                    imageCanvas.height = height;
-
-                    ctx.drawImage(img, 0, 0, width, height);
-                    imageHidden.value=imageCanvas.toDataURL("image/jpeg");
                     appendItem();
                 }
             });
@@ -129,7 +81,6 @@
 
         $$( document ).ready(function() {
             $$( ".generate" ).click(function( event ) {
-                $$(".imageLoader").prop("disabled", true);
                 $$("#theform").submit();
             });
         });
@@ -154,10 +105,7 @@
                     </a>
                     
                     <textarea name="des" class="btn-block afterbrowse" > </textarea>
-
                     <img class="img-responsive" id="thumbnail" ></img>
-                    <input class="imageHidden" name="pic" type="hidden" >
-
                     <button type="button" class="remove btn btn-block btn-default afterbrowse" aria-label="Remove Image">
                         删除
                     </button>

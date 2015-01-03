@@ -20,7 +20,8 @@ render = web.template.render(templates_root)
 
 
 urls = ('/', 'Index',
-        '/default/(.*)/(.*)', 'Default')
+        '/default/(.*)/(.*)/(.*)', 'Default',
+        '/default/(.*)/(.*)', 'OldVersion')
 
 def random_str(randomlength=10):
     str = ''
@@ -31,7 +32,7 @@ def random_str(randomlength=10):
         str+=chars[random.randint(0, length)]
     return str
 
-class Default():
+class OldVersion():
     def GET(self, bucketId, tupleId):
         conn = sae.storage.Connection()
         bucket = conn.get_bucket(bucketId)
@@ -41,20 +42,29 @@ class Default():
         data['urlPrefix'] = urlPrefix
         return render.default(web.storage(data))
 
+class Default():
+    def GET(self, bucketId, dateId, tupleId):
+        conn = sae.storage.Connection()
+        bucket = conn.get_bucket(bucketId)
+        data = pickle.loads(bucket.get_object_contents(dateId+"/"+tupleId+"/config.txt"))
+        # data['des'] = [x.replace("\r\n", "<br>") for x in data['des']]
+        urlPrefix = bucket.generate_url(dateId+"/"+tupleId+"/config.txt")[:-11];
+        data['urlPrefix'] = urlPrefix
+        return render.default(web.storage(data))
+
 class Index:
     def GET(self):
         return render.index();
 
     def POST(self):
-        # chars='aabcdefghijklmnopqrstuvwxyz0123456789'
-        # bucketId = chars[date.today().day]
         bucketId = 't'
         bucket = Bucket(bucketId)
 
+        dateId = date.today().strftime("%Y-%m-%d") 
         tupleId = random_str()
         while True:
             try:
-                if list(bucket.list(prefix=tupleId)):
+                if list(bucket.list(prefix=(dateId+"/"+tupleId))):
                     tupleId = random_str()
                 else:
                     break
@@ -73,7 +83,7 @@ class Index:
         for p, d in zip(x['pic'], y['des']):
             if len(p)==0:
                 continue
-            bucket.put_object(tupleId+"/"+str(i)+'.jpg', decodestring(p[23:]))
+            bucket.put_object(dateId+"/"+tupleId+"/"+str(i)+'.jpg', p)
             data['des'].append(d)
             i = i + 1
 
@@ -82,9 +92,9 @@ class Index:
 
         data['number']=i
 
-        bucket.put_object(tupleId+"/config.txt", pickle.dumps(data))
+        bucket.put_object(dateId+"/"+tupleId+"/config.txt", pickle.dumps(data))
 
-        raise web.seeother("/default/"+bucketId+"/"+tupleId)
+        raise web.seeother("/default/"+bucketId+"/"+dateId+"/"+tupleId)
 
 
 app = web.application(urls, globals()) 
